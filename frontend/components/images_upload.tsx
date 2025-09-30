@@ -3,6 +3,7 @@
 import React, { useCallback, useState } from "react"
 import { useDropzone } from "react-dropzone"
 import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils" // если у тебя есть утилита cn (обычно в shadcn проектах)
 
 export default function ImageUpload() {
   const [files, setFiles] = useState<File[]>([])
@@ -26,11 +27,14 @@ export default function ImageUpload() {
       {/* Зона загрузки */}
       <div
         {...getRootProps()}
-        className={`border-2 border-dashed rounded-2xl p-6 text-center cursor-pointer transition ${isDragActive ? "border-blue-500 bg-blue-50" : "border-gray-300"
-          }`}
+        className={cn(
+          "border-2 border-dashed rounded-xl p-6 text-center cursor-pointer transition",
+          "bg-background border-border text-muted-foreground",
+          isDragActive && "border-primary/50 bg-primary/5"
+        )}
       >
         <input {...getInputProps()} />
-        <p className="text-gray-500">Перетащи файлы или нажми для выбора</p>
+        <p className="text-sm">Перетащи файлы или нажми для выбора</p>
       </div>
 
       {/* Список файлов */}
@@ -38,7 +42,7 @@ export default function ImageUpload() {
         {files.map((file, idx) => (
           <div
             key={idx}
-            className="flex items-center justify-between border rounded-xl px-3 py-2 bg-white shadow-sm"
+            className="flex items-center justify-between rounded-lg border border-border bg-card px-3 py-2 shadow-sm"
           >
             {/* Левая часть: превью + имя */}
             <div className="flex items-center gap-3 flex-1 min-w-0">
@@ -47,7 +51,7 @@ export default function ImageUpload() {
                 alt={file.name}
                 className="w-8 h-8 object-cover rounded"
               />
-              <span className="text-sm text-gray-700 truncate">
+              <span className="text-sm text-card-foreground truncate">
                 {file.name}
               </span>
             </div>
