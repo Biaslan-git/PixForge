@@ -100,18 +100,18 @@ export default function ImageUploadForm() {
         </AnimatePresence>
 
         {/* Кнопка отправки */}
-        <AnimatePresence>
-          {files.length > 0 && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="flex justify-end pt-2"
-            >
-              <Button onClick={handleSubmit}>Загрузить все</Button>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        {/* <AnimatePresence> */}
+        {/*   {files.length > 0 && ( */}
+        {/*     <motion.div */}
+        {/*       initial={{ opacity: 0 }} */}
+        {/*       animate={{ opacity: 1 }} */}
+        {/*       exit={{ opacity: 0 }} */}
+        {/*       className="flex justify-end pt-2" */}
+        {/*     > */}
+        {/*       <Button onClick={handleSubmit}>Загрузить все</Button> */}
+        {/*     </motion.div> */}
+        {/*   )} */}
+        {/* </AnimatePresence> */}
       </CardContent>
     </Card>
   )
