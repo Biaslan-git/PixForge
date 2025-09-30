@@ -84,10 +84,11 @@ export default function ImageUploadForm() {
                     </span>
                   </div>
 
-                  {/* Кнопка удалить */}
+                  {/* Аккуратная кнопка удаления */}
                   <Button
                     size="icon"
-                    variant="destructive"
+                    variant="ghost"
+                    className="text-muted-foreground hover:text-destructive"
                     onClick={() => removeFile(file)}
                   >
                     <Trash2 className="h-4 w-4" />
