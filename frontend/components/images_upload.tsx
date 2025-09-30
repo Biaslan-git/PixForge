@@ -41,13 +41,13 @@ export default function ImageUpload() {
             className="flex items-center justify-between border rounded-xl px-3 py-2 bg-white shadow-sm"
           >
             {/* Левая часть: превью + имя */}
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 flex-1 min-w-0">
               <img
                 src={URL.createObjectURL(file)}
                 alt={file.name}
                 className="w-8 h-8 object-cover rounded"
               />
-              <span className="text-sm text-gray-700 truncate max-w-[200px]">
+              <span className="text-sm text-gray-700 truncate">
                 {file.name}
               </span>
             </div>
