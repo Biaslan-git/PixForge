@@ -1,13 +1,14 @@
 from fastapi import FastAPI
 import uvicorn
 
-from auth.router import router as auth_router
+from src.auth.router import router as auth_router, security
 
-from lifespan import lifespan
-from config import settings
+from src.lifespan import lifespan
+from src.config import settings
 
 app = FastAPI(lifespan=lifespan)
 app.include_router(auth_router)
+security.handle_errors(app=app)
 
 
 @app.get("/")

@@ -1,6 +1,6 @@
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
-from database.query.orm import AsyncORM
+from .database.query.orm import AsyncORM
 
 
 @asynccontextmanager
