@@ -21,6 +21,6 @@ expires_at = Annotated[
     datetime.datetime,
     mapped_column(
         server_default=text("TIMEZONE('UTC-3', now()) + interval '30 days'"),
-        nullable=False
-    )
+        nullable=False,
+    ),
 ]

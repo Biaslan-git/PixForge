@@ -1,9 +1,9 @@
 from sqlalchemy import Enum, ForeignKey, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from auth.column_types import intpk, created_at, updated_at, expires_at
-from auth.enums import UserStatus
-from database.database import Base
+from .column_types import intpk, created_at, updated_at, expires_at
+from .enums import UserStatus
+from ..database.database import Base
 
 
 class UsersOrm(Base):
@@ -11,9 +11,6 @@ class UsersOrm(Base):
 
     id: Mapped[intpk]
     email: Mapped[str] = mapped_column(unique=True, index=True, nullable=False)
-    phone: Mapped[str] = mapped_column(
-        String(16), unique=True, index=True, nullable=True
-    )
     hashed_password: Mapped[str] = mapped_column(nullable=False)
     status: Mapped[UserStatus] = mapped_column(
         Enum(UserStatus, name="user_status_enum"),
@@ -22,11 +19,11 @@ class UsersOrm(Base):
     )
     created_at: Mapped[created_at]
     updated_at: Mapped[updated_at]
-    
+
     tokens: Mapped[list["UserTokensOrm"]] = relationship(
         "UserTokensOrm", back_populates="user", cascade="all, delete-orphan"
     )
-    
+
 
 class UserTokensOrm(Base):
     __tablename__ = "user_tokens"

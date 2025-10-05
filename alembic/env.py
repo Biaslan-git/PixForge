@@ -11,9 +11,11 @@ import sys
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.insert(0, os.path.join(BASE_DIR, "src"))
 
-from config import settings # noqa
-from database.database import Base # noqa
-from auth.models import UsersOrm # noqa
+from src.config import settings # noqa
+from src.database.database import Base # noqa
+from src.auth.models import UsersOrm, UserTokensOrm # noqa
+
+print(UsersOrm.__table__.columns.keys())
 
 config = context.config
 
