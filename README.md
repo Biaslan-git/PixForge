@@ -106,3 +106,40 @@
    * Асинхронная очередь задач.
    * Авторизация (личный кабинет, история обработок).
 
+
+## 🐳 Docker Setup
+
+This project uses Docker for containerization. There are configurations for both development and production environments.
+
+### Development Mode
+
+To run the application in development mode:
+
+```bash
+docker-compose -f docker-compose.dev.yml up --build
+```
+
+Or simply:
+
+```bash
+docker-compose up --build
+```
+
+This will:
+- Build the frontend container using Dockerfile.dev
+- Mount the source code as a volume for hot-reloading
+- Expose the application on port 3000
+
+### Production Mode
+
+To run the application in production mode:
+
+```bash
+docker-compose -f docker-compose.prod.yml up --build
+```
+
+This will:
+- Build the frontend container using the production Dockerfile
+- Create an optimized production build
+- Expose the application on port 3000
+
