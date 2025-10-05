@@ -6,8 +6,13 @@ import ShimmerText from "@/components/kokonutui/shimmer-text";
 import Toolbar from "@/components/kokonutui/toolbar";
 
 import {
+  CopyMinus,
+  Crop,
   FileInput,
+  Rocket,
+  Waves,
 } from "lucide-react";
+import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 
 export default function ImageUploadWrapper() {
   const [images, setImages] = useState<File[]>([]);
@@ -20,6 +25,9 @@ export default function ImageUploadWrapper() {
 
   const toolbarTools = [
     { id: "convert", title: "Конвертация", icon: FileInput },
+    { id: "compress", title: "Сжатие", icon: CopyMinus },
+    { id: "crop", title: "Обрезка", icon: Crop },
+    { id: "watermark", title: "Водяной знак", icon: Waves },
   ];
   // const toolbarFilters = [
   //   { id: "move", title: "Move", icon: Move },
@@ -50,6 +58,7 @@ export default function ImageUploadWrapper() {
             items={toolbarTools}
             selected={selectedTool}
             onSelect={setSelectedTool}
+            className="text-nowrap"
           />
         </div>
         {/* <div> */}
@@ -64,6 +73,15 @@ export default function ImageUploadWrapper() {
         {/*     onSelect={setSelectedFilter} */}
         {/*   /> */}
         {/* </div> */}
+
+        <HoverBorderGradient
+          containerClassName="rounded-full"
+          as="button"
+          className="dark:bg-secondary bg-white text-black dark:text-white flex items-center space-x-2"
+        >
+          <Rocket />
+          <span>Начать обработку</span>
+        </HoverBorderGradient>
 
       </div >
     </div>
