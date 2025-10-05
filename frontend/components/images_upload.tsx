@@ -1,46 +1,49 @@
-"use client"
+"use client";
 
-import React, { useCallback, useState } from "react"
-import { useDropzone } from "react-dropzone"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { cn } from "@/lib/utils"
-import { AnimatePresence, motion } from "framer-motion"
-import { Trash2 } from "lucide-react"
+import React, { useCallback, useState } from "react";
+import { useDropzone } from "react-dropzone";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
+import { AnimatePresence, motion } from "framer-motion";
+import { Trash2 } from "lucide-react";
 
-export default function ImageUploadForm() {
-  const [files, setFiles] = useState<File[]>([])
+// описываем пропсы
+type ImageUploadProps = {
+  onChange?: (files: File[]) => void;
+};
 
-  const onDrop = useCallback((acceptedFiles: File[]) => {
-    setFiles(prev => [...prev, ...acceptedFiles])
-  }, [])
+export default function ImageUploadForm({ onChange }: ImageUploadProps) {
+  const [files, setFiles] = useState<File[]>([]);
+
+  const updateFiles = (newFiles: File[]) => {
+    setFiles(newFiles);
+    onChange?.(newFiles); // уведомляем родителя
+  };
+
+  const onDrop = useCallback(
+    (acceptedFiles: File[]) => {
+      const newFiles = [...files, ...acceptedFiles];
+      updateFiles(newFiles);
+    },
+    [files]
+  );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     accept: { "image/*": [] },
     onDrop,
     multiple: true,
-  })
+  });
 
   const removeFile = (file: File) => {
-    setFiles(prev => prev.filter(f => f !== file))
-  }
-
-  const handleSubmit = async () => {
-    const formData = new FormData()
-    files.forEach(file => formData.append("files", file))
-
-    await fetch("/api/upload", {
-      method: "POST",
-      body: formData,
-    })
-  }
+    const newFiles = files.filter((f) => f !== file);
+    updateFiles(newFiles);
+  };
 
   return (
     <Card className="w-full max-w-xl">
       <CardHeader>
-        <CardTitle className="text-lg font-medium">
-          Загрузка изображений
-        </CardTitle>
+        <CardTitle className="text-lg font-medium">Загрузка изображений</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
         {/* Dropzone */}
@@ -54,8 +57,7 @@ export default function ImageUploadForm() {
         >
           <input {...getInputProps()} />
           <p className="text-sm">
-            Перетащи сюда файлы или <span className="text-primary">нажми</span>{" "}
-            для выбора
+            Перетащи сюда файлы или <span className="text-primary">нажми</span> для выбора
           </p>
         </div>
 
@@ -63,7 +65,7 @@ export default function ImageUploadForm() {
         <AnimatePresence>
           {files.length > 0 && (
             <div className="space-y-2">
-              {files.map((file, idx) => (
+              {files.map((file) => (
                 <motion.div
                   key={file.name}
                   initial={{ opacity: 0, y: 10 }}
@@ -72,7 +74,6 @@ export default function ImageUploadForm() {
                   transition={{ duration: 0.25 }}
                   className="flex items-center justify-between rounded-lg border border-border bg-card px-3 py-2 shadow-sm"
                 >
-                  {/* Левая часть */}
                   <div className="flex items-center gap-3 flex-1 min-w-0">
                     <img
                       src={URL.createObjectURL(file)}
@@ -83,8 +84,6 @@ export default function ImageUploadForm() {
                       {file.name}
                     </span>
                   </div>
-
-                  {/* Аккуратная кнопка удаления */}
                   <Button
                     size="icon"
                     variant="ghost"
@@ -98,21 +97,7 @@ export default function ImageUploadForm() {
             </div>
           )}
         </AnimatePresence>
-
-        {/* Кнопка отправки */}
-        {/* <AnimatePresence> */}
-        {/*   {files.length > 0 && ( */}
-        {/*     <motion.div */}
-        {/*       initial={{ opacity: 0 }} */}
-        {/*       animate={{ opacity: 1 }} */}
-        {/*       exit={{ opacity: 0 }} */}
-        {/*       className="flex justify-end pt-2" */}
-        {/*     > */}
-        {/*       <Button onClick={handleSubmit}>Загрузить все</Button> */}
-        {/*     </motion.div> */}
-        {/*   )} */}
-        {/* </AnimatePresence> */}
       </CardContent>
     </Card>
-  )
+  );
 }
