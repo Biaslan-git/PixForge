@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import ImageUpload from "@/components/images_upload";
-import Toolbar from "@/components/kokonutui/toolbar";
 import ShimmerText from "@/components/kokonutui/shimmer-text";
 
 export default function ImageUploadWrapper() {
@@ -13,8 +12,11 @@ export default function ImageUploadWrapper() {
   };
 
   return (
-    <div className="flex flex-col gap-4 items-center">
-      <ImageUpload onChange={handleImageChange} />
+    <div>
+      <ShimmerText text="Куй свои изображения как хочешь" />
+      <div className="flex flex-col gap-4 items-center">
+        <ImageUpload onChange={handleImageChange} />
+      </div>
     </div>
   );
 }
