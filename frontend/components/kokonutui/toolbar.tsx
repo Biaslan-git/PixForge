@@ -1,46 +1,22 @@
 "use client";
 
-/**
- * @author: @dorian_baffier
- * @description: Toolbar
- * @version: 1.0.0
- * @date: 2025-06-26
- * @license: MIT
- * @website: https://kokonutui.com
- * @github: https://github.com/kokonut-labs/kokonutui
- */
-
 import * as React from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { cn } from "@/lib/utils";
-import {
-  Layers,
-  SlidersHorizontal,
-  FileDown,
-  Share2,
-  Bell,
-  CircleUserRound,
-  Palette,
-  MousePointer2,
-  Move,
-  Shapes,
-  Frame,
-  type LucideIcon,
-  Edit2,
-  Lock,
-} from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 
 interface ToolbarItem {
   id: string;
   title: string;
   icon: LucideIcon;
-  type?: never;
 }
 
 interface ToolbarProps {
   className?: string;
   activeColor?: string;
-  onSearch?: (value: string) => void;
+  items: ToolbarItem[];                     // список кнопок извне
+  selected?: string | null;                 // выбранный инструмент
+  onSelect?: (id: string | null) => void;   // колбэк выбора
 }
 
 const buttonVariants = {
@@ -68,50 +44,20 @@ const notificationVariants = {
   exit: { opacity: 0, y: -20 },
 };
 
-const lineVariants = {
-  initial: { scaleX: 0, x: "-50%" },
-  animate: {
-    scaleX: 1,
-    x: "0%",
-    transition: { duration: 0.2, ease: "easeOut" },
-  },
-  exit: {
-    scaleX: 0,
-    x: "50%",
-    transition: { duration: 0.2, ease: "easeIn" },
-  },
-};
-
 const transition = { type: "spring", bounce: 0, duration: 0.4 };
 
 export function Toolbar({
   className,
   activeColor = "text-primary",
-  onSearch,
+  items,
+  selected,
+  onSelect,
 }: ToolbarProps) {
-  const [selected, setSelected] = React.useState<string | null>("select");
-  const [isToggled, setIsToggled] = React.useState(false);
-  const [activeNotification, setActiveNotification] = React.useState<
-    string | null
-  >(null);
-  const outsideClickRef = React.useRef(null);
-
-  const toolbarItems: ToolbarItem[] = [
-    { id: "select", title: "Select", icon: MousePointer2 },
-    { id: "move", title: "Move", icon: Move },
-    { id: "shapes", title: "Shapes", icon: Shapes },
-    { id: "layers", title: "Layers", icon: Layers },
-    { id: "frame", title: "Frame", icon: Frame },
-    { id: "properties", title: "Properties", icon: SlidersHorizontal },
-    { id: "export", title: "Export", icon: FileDown },
-    { id: "share", title: "Share", icon: Share2 },
-    { id: "notifications", title: "Notifications", icon: Bell },
-    { id: "profile", title: "Profile", icon: CircleUserRound },
-    { id: "appearance", title: "Appearance", icon: Palette },
-  ];
+  const [activeNotification, setActiveNotification] = React.useState<string | null>(null);
 
   const handleItemClick = (itemId: string) => {
-    setSelected(selected === itemId ? null : itemId);
+    const newSelected = selected === itemId ? null : itemId;
+    onSelect?.(newSelected);
     setActiveNotification(itemId);
     setTimeout(() => setActiveNotification(null), 1500);
   };
@@ -119,12 +65,9 @@ export function Toolbar({
   return (
     <div className="space-y-2">
       <div
-        ref={outsideClickRef}
         className={cn(
           "flex items-center gap-3 p-2 relative",
-          "bg-background",
-          "border rounded-xl",
-          "transition-all duration-200",
+          "bg-background border rounded-xl transition-all duration-200",
           className
         )}
       >
@@ -139,19 +82,14 @@ export function Toolbar({
               className="absolute -top-8 left-1/2 transform -translate-x-1/2 z-50"
             >
               <div className="bg-primary text-primary-foreground px-3 py-1 rounded-full text-xs">
-                {
-                  toolbarItems.find(
-                    (item) => item.id === activeNotification
-                  )?.title
-                }{" "}
-                clicked!
+                {items.find((i) => i.id === activeNotification)?.title} clicked!
               </div>
             </motion.div>
           )}
         </AnimatePresence>
 
         <div className="flex items-center gap-2">
-          {toolbarItems.map((item) => (
+          {items.map((item) => (
             <motion.button
               key={item.id}
               variants={buttonVariants as any}
@@ -170,9 +108,7 @@ export function Toolbar({
             >
               <item.icon
                 size={16}
-                className={cn(
-                  selected === item.id && "text-white"
-                )}
+                className={cn(selected === item.id && "text-white")}
               />
               <AnimatePresence initial={false}>
                 {selected === item.id && (
@@ -190,40 +126,6 @@ export function Toolbar({
               </AnimatePresence>
             </motion.button>
           ))}
-
-          <motion.button
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            onClick={() => setIsToggled(!isToggled)}
-            className={cn(
-              "flex items-center gap-2 px-4 py-2",
-              "rounded-xl border shadow-sm transition-all duration-200",
-              "hover:shadow-md active:border-primary/50",
-              isToggled
-                ? [
-                  "bg-[#1F9CFE] text-white",
-                  "border-[#1F9CFE]/30",
-                  "hover:bg-[#1F9CFE]/90",
-                  "hover:border-[#1F9CFE]/40",
-                ]
-                : [
-                  "bg-background text-muted-foreground",
-                  "border-border/30",
-                  "hover:bg-muted",
-                  "hover:text-foreground",
-                  "hover:border-border/40",
-                ]
-            )}
-          >
-            {isToggled ? (
-              <Edit2 className="w-3.5 h-3.5" />
-            ) : (
-              <Lock className="w-3.5 h-3.5" />
-            )}
-            <span className="text-sm font-medium">
-              {isToggled ? "On" : "Off"}
-            </span>
-          </motion.button>
         </div>
       </div>
     </div>
