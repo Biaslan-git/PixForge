@@ -1,3 +1,12 @@
-# from pydantic import EmailStr
+from pydantic import BaseModel, EmailStr
 
-# Сделать DTO для email в userORM
+
+class UserCredentialsDTO(BaseModel):
+    email: EmailStr
+    password: str
+
+
+class TokenDTO(BaseModel):
+    access_token: str
+    refresh_token: str
+    token_type: str = "bearer"
