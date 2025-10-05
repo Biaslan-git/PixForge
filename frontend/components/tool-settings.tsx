@@ -1,6 +1,7 @@
 'use client';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { motion } from 'framer-motion';
 
 interface ToolSettingsProps {
   selectedTool: string;
@@ -18,13 +19,49 @@ const ToolSettings = ({ selectedTool }: ToolSettingsProps) => {
     }
   };
 
+  // Animation variants for smooth transitions
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { 
+      opacity: 1,
+      transition: { 
+        duration: 0.3,
+        when: "beforeChildren",
+        staggerChildren: 0.1
+      }
+    },
+    exit: { 
+      opacity: 0,
+      transition: { duration: 0.2 }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: { 
+      y: 0, 
+      opacity: 1,
+      transition: { 
+        duration: 0.3,
+        ease: "easeOut"
+      }
+    }
+  };
+
   // Render different settings based on selected tool
   const renderToolSettings = () => {
     switch(selectedTool) {
       case 'convert':
         return (
-          <div className="space-y-4">
-            <div>
+          <motion.div 
+            key="convert" 
+            variants={containerVariants} 
+            initial="hidden" 
+            animate="visible" 
+            exit="exit"
+            className="space-y-4"
+          >
+            <motion.div variants={itemVariants}>
               <label className="block text-sm font-medium mb-1">Формат изображения</label>
               <select 
                 name="format"
@@ -35,9 +72,9 @@ const ToolSettings = ({ selectedTool }: ToolSettingsProps) => {
                 <option value="webp">WebP</option>
                 <option value="gif">GIF</option>
               </select>
-            </div>
+            </motion.div>
             
-            <div>
+            <motion.div variants={itemVariants}>
               <label className="block text-sm font-medium mb-1">Качество (для JPG и WebP)</label>
               <div className="flex items-center space-x-2">
                 <input 
@@ -50,14 +87,21 @@ const ToolSettings = ({ selectedTool }: ToolSettingsProps) => {
                 />
                 <span className="text-sm w-10">80%</span>
               </div>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         );
       
       case 'compress':
         return (
-          <div className="space-y-4">
-            <div>
+          <motion.div 
+            key="compress" 
+            variants={containerVariants} 
+            initial="hidden" 
+            animate="visible" 
+            exit="exit"
+            className="space-y-4"
+          >
+            <motion.div variants={itemVariants}>
               <label className="block text-sm font-medium mb-1">Уровень сжатия</label>
               <div className="flex items-center space-x-2">
                 <input 
@@ -70,9 +114,9 @@ const ToolSettings = ({ selectedTool }: ToolSettingsProps) => {
                 />
                 <span className="text-sm w-10">60%</span>
               </div>
-            </div>
+            </motion.div>
             
-            <div>
+            <motion.div variants={itemVariants}>
               <label className="block text-sm font-medium mb-1">Целевой размер файла (KB)</label>
               <input 
                 type="number" 
@@ -81,14 +125,21 @@ const ToolSettings = ({ selectedTool }: ToolSettingsProps) => {
                 min="1"
                 className="w-full p-2 border rounded-md bg-background"
               />
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         );
       
       case 'crop':
         return (
-          <div className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
+          <motion.div 
+            key="crop" 
+            variants={containerVariants} 
+            initial="hidden" 
+            animate="visible" 
+            exit="exit"
+            className="space-y-4"
+          >
+            <motion.div variants={itemVariants} className="grid grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium mb-1">Ширина (px)</label>
                 <input 
@@ -109,9 +160,9 @@ const ToolSettings = ({ selectedTool }: ToolSettingsProps) => {
                   className="w-full p-2 border rounded-md bg-background"
                 />
               </div>
-            </div>
+            </motion.div>
             
-            <div className="grid grid-cols-2 gap-4">
+            <motion.div variants={itemVariants} className="grid grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium mb-1">X (отступ слева)</label>
                 <input 
@@ -132,9 +183,9 @@ const ToolSettings = ({ selectedTool }: ToolSettingsProps) => {
                   className="w-full p-2 border rounded-md bg-background"
                 />
               </div>
-            </div>
+            </motion.div>
             
-            <div>
+            <motion.div variants={itemVariants}>
               <label className="block text-sm font-medium mb-1">Сохранить пропорции</label>
               <div className="flex items-center mt-2">
                 <input 
@@ -144,14 +195,21 @@ const ToolSettings = ({ selectedTool }: ToolSettingsProps) => {
                 />
                 <span>Включить</span>
               </div>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         );
       
       case 'watermark':
         return (
-          <div className="space-y-4">
-            <div>
+          <motion.div 
+            key="watermark" 
+            variants={containerVariants} 
+            initial="hidden" 
+            animate="visible" 
+            exit="exit"
+            className="space-y-4"
+          >
+            <motion.div variants={itemVariants}>
               <label className="block text-sm font-medium mb-1">Загрузить изображение водяного знака</label>
               <input 
                 type="file" 
@@ -159,9 +217,9 @@ const ToolSettings = ({ selectedTool }: ToolSettingsProps) => {
                 accept="image/*"
                 className="w-full p-2 border rounded-md bg-background"
               />
-            </div>
+            </motion.div>
             
-            <div className="grid grid-cols-2 gap-4">
+            <motion.div variants={itemVariants} className="grid grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium mb-1">Позиция по X (%)</label>
                 <div className="flex items-center space-x-2">
@@ -190,9 +248,9 @@ const ToolSettings = ({ selectedTool }: ToolSettingsProps) => {
                   <span className="text-sm w-10">90%</span>
                 </div>
               </div>
-            </div>
+            </motion.div>
             
-            <div>
+            <motion.div variants={itemVariants}>
               <label className="block text-sm font-medium mb-1">Прозрачность (%)</label>
               <div className="flex items-center space-x-2">
                 <input 
@@ -205,9 +263,9 @@ const ToolSettings = ({ selectedTool }: ToolSettingsProps) => {
                 />
                 <span className="text-sm w-10">50%</span>
               </div>
-            </div>
+            </motion.div>
             
-            <div>
+            <motion.div variants={itemVariants}>
               <label className="block text-sm font-medium mb-1">Размер водяного знака (%)</label>
               <div className="flex items-center space-x-2">
                 <input 
@@ -220,12 +278,22 @@ const ToolSettings = ({ selectedTool }: ToolSettingsProps) => {
                 />
                 <span className="text-sm w-10">20%</span>
               </div>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         );
       
       default:
-        return <p>Настройки для выбранного инструмента недоступны</p>;
+        return (
+          <motion.div 
+            key="default" 
+            variants={containerVariants} 
+            initial="hidden" 
+            animate="visible" 
+            exit="exit"
+          >
+            <p>Настройки для выбранного инструмента недоступны</p>
+          </motion.div>
+        );
     }
   };
 
