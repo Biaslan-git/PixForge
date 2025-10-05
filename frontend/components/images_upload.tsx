@@ -42,9 +42,6 @@ export default function ImageUploadForm({ onChange }: ImageUploadProps) {
 
   return (
     <Card className="w-full max-w-xl">
-      <CardHeader>
-        <CardTitle className="text-lg font-medium">Загрузка изображений</CardTitle>
-      </CardHeader>
       <CardContent className="space-y-4">
         {/* Dropzone */}
         <div
