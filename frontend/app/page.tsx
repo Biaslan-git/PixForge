@@ -40,18 +40,18 @@ export default function ImageUploadWrapper() {
     { id: "profile", title: "Profile", icon: CircleUserRound },
     { id: "appearance", title: "Appearance", icon: Palette },
   ];
-  const toolbarFilters = [
-    { id: "move", title: "Move", icon: Move },
-    { id: "shapes", title: "Shapes", icon: Shapes },
-    { id: "layers", title: "Layers", icon: Layers },
-    { id: "frame", title: "Frame", icon: Frame },
-    { id: "properties", title: "Properties", icon: SlidersHorizontal },
-    { id: "export", title: "Export", icon: FileDown },
-    { id: "share", title: "Share", icon: Share2 },
-    { id: "notifications", title: "Notifications", icon: Bell },
-    { id: "profile", title: "Profile", icon: CircleUserRound },
-    { id: "appearance", title: "Appearance", icon: Palette },
-  ];
+  // const toolbarFilters = [
+  //   { id: "move", title: "Move", icon: Move },
+  //   { id: "shapes", title: "Shapes", icon: Shapes },
+  //   { id: "layers", title: "Layers", icon: Layers },
+  //   { id: "frame", title: "Frame", icon: Frame },
+  //   { id: "properties", title: "Properties", icon: SlidersHorizontal },
+  //   { id: "export", title: "Export", icon: FileDown },
+  //   { id: "share", title: "Share", icon: Share2 },
+  //   { id: "notifications", title: "Notifications", icon: Bell },
+  //   { id: "profile", title: "Profile", icon: CircleUserRound },
+  //   { id: "appearance", title: "Appearance", icon: Palette },
+  // ];
 
   return (
     <div>
