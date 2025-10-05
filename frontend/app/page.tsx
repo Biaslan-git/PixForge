@@ -63,10 +63,18 @@ export default function ImageUploadWrapper() {
             className="text-nowrap"
           />
         </div>
+        <HoverBorderGradient
+          containerClassName="rounded-full"
+          as="button"
+          className="dark:bg-secondary bg-white text-black dark:text-white flex items-center space-x-2"
+        >
+          <Rocket />
+          <span>Начать обработку</span>
+        </HoverBorderGradient>
 
         {/* Tool Settings Section with Animation */}
         {selectedTool && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
@@ -91,14 +99,6 @@ export default function ImageUploadWrapper() {
         {/*   /> */}
         {/* </div> */}
 
-        <HoverBorderGradient
-          containerClassName="rounded-full"
-          as="button"
-          className="dark:bg-secondary bg-white text-black dark:text-white flex items-center space-x-2"
-        >
-          <Rocket />
-          <span>Начать обработку</span>
-        </HoverBorderGradient>
 
       </div >
     </div>
