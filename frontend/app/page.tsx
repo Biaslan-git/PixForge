@@ -4,6 +4,7 @@ import { useState } from "react";
 import ImageUpload from "@/components/images_upload";
 import ShimmerText from "@/components/kokonutui/shimmer-text";
 import Toolbar from "@/components/kokonutui/toolbar";
+import ToolSettings from "@/components/tool-settings";
 
 import {
   CopyMinus,
@@ -61,6 +62,15 @@ export default function ImageUploadWrapper() {
             className="text-nowrap"
           />
         </div>
+
+        {/* Tool Settings Section */}
+        {selectedTool && (
+          <div className="w-full max-w-md p-4 border rounded-lg bg-muted">
+            <h3 className="text-lg font-medium mb-2">Настройки инструмента: {selectedTool}</h3>
+            <ToolSettings selectedTool={selectedTool} />
+          </div>
+        )}
+
         {/* <div> */}
         {/*   <div className="text-sm text-muted-foreground"> */}
         {/*     {selectedFilter ? */}
