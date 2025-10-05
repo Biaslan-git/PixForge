@@ -3,6 +3,7 @@
 import { useState } from "react";
 import ImageUpload from "@/components/images_upload";
 import ShimmerText from "@/components/kokonutui/shimmer-text";
+import Toolbar from "@/components/kokonutui/toolbar";
 
 export default function ImageUploadWrapper() {
   const [images, setImages] = useState<File[]>([]); // переменная для хранения файлов
@@ -16,6 +17,7 @@ export default function ImageUploadWrapper() {
       <ShimmerText text="Куй свои изображения как хочешь" />
       <div className="flex flex-col gap-4 items-center">
         <ImageUpload onChange={handleImageChange} />
+        <Toolbar />
       </div>
     </div>
   );
