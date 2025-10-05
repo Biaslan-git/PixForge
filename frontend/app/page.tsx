@@ -48,7 +48,7 @@ export default function ImageUploadWrapper() {
       <div className="flex flex-col gap-4 items-center">
         <ImageUpload onChange={handleImageChange} />
 
-        <div>
+        <div className="space-y-1">
           <div className="text-sm text-muted-foreground">
             {selectedTool ?
               <span>Выбранный инструмент: {selectedTool}</span>
