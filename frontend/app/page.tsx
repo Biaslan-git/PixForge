@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { motion } from "framer-motion";
 import ImageUpload from "@/components/images_upload";
 import ShimmerText from "@/components/kokonutui/shimmer-text";
 import Toolbar from "@/components/kokonutui/toolbar";
@@ -63,12 +64,18 @@ export default function ImageUploadWrapper() {
           />
         </div>
 
-        {/* Tool Settings Section */}
+        {/* Tool Settings Section with Animation */}
         {selectedTool && (
-          <div className="w-full max-w-md p-4 border rounded-lg bg-muted">
+          <motion.div 
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+            className="w-full max-w-md p-4 border rounded-lg bg-muted"
+          >
             <h3 className="text-lg font-medium mb-2">Настройки инструмента: {selectedTool}</h3>
             <ToolSettings selectedTool={selectedTool} />
-          </div>
+          </motion.div>
         )}
 
         {/* <div> */}
