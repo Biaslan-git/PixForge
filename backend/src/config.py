@@ -5,7 +5,7 @@ class Settings(BaseSettings):
     # Основные настройки
     DEBUG: bool
     PORT: int
-
+    MODE: str
     # PgSQL настройки
     DB_HOST: str
     DB_PORT: str

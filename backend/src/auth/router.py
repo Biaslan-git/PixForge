@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Response, HTTPException
 from authx import AuthX
 from .config import config
+from ..config import settings
 from ..database.query.orm import AsyncORM
 from .schemas import UserCredentialsDTO, TokenDTO
 
@@ -34,7 +35,7 @@ async def registration(credentials: UserCredentialsDTO, response: Response):
         value=access_token,
         max_age=config.JWT_ACCESS_TOKEN_EXPIRES,  # type: ignore
         httponly=True,
-        secure=True,
+        secure=settings.MODE == "PROD",
     )
 
     await AsyncORM.add_refresh_token(refresh_token=refresh_token, user_id=user.id)
