@@ -6,7 +6,7 @@ from ..config import settings
 
 async_engine = create_async_engine(
     url=settings.database_url_asyncpg,
-    echo=True,
+    echo=settings.MODE == "DEBUG",
 )
 
 async_session_factory = async_sessionmaker(async_engine)
