@@ -2,6 +2,7 @@ from fastapi import APIRouter, Response, HTTPException
 from authx import AuthX
 from .config import config
 from ..config import settings
+from ..logger import logger
 from ..database.query.orm import AsyncORM
 from .schemas import UserCredentialsDTO, TokenDTO
 
@@ -23,8 +24,10 @@ async def registration(credentials: UserCredentialsDTO, response: Response):
     try:
         user = await AsyncORM.add_user(credentials)
     except HTTPException as e:
+        logger.exception(f"Unexpected HTTPException when registering {credentials.email}: {e}")
         raise e
-    except Exception:
+    except Exception as e:
+        logger.exception(f"Unexpected Exception when registering {credentials.email}: {e}")
         raise HTTPException(status_code=500, detail="Internal server error")
 
     access_token = security.create_access_token(credentials.email)
@@ -40,6 +43,4 @@ async def registration(credentials: UserCredentialsDTO, response: Response):
 
     await AsyncORM.add_refresh_token(refresh_token=refresh_token, user_id=user.id)
 
-    return TokenDTO(
-        access_token=access_token, token_type="bearer"
-    )
+    return TokenDTO(access_token=access_token, token_type="bearer")
